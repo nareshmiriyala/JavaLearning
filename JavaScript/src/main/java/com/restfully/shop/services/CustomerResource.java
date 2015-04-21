@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Path("/customers")
 public class CustomerResource
 {
-   private Map<Integer, Customer> customerDB = new ConcurrentHashMap<Integer, Customer>();
+   private static Map<Integer, Customer> customerDB = new ConcurrentHashMap<Integer, Customer>();
    private AtomicInteger idCounter = new AtomicInteger();
 
    public CustomerResource()
