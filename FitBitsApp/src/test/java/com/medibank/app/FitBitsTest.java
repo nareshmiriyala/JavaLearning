@@ -3,6 +3,7 @@ package com.medibank.app;
 import com.medibank.entities.Position;
 import com.medibank.entities.SoccerPitch;
 import com.medibank.entities.Trainee;
+import com.medibank.exceptions.InvalidPositionException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,12 +58,10 @@ public class FitBitsTest {
         Position expectedPosition = new Position(5, 1, FitBits.Directions.E);
         assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
-    @Test
+    @Test(expected = InvalidPositionException.class)
     public void testWhenStartingPositionInvalid() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
         Trainee trainee = spyFitBits.startSession();
-        Position expectedPosition = new Position(6, 1, FitBits.Directions.E);
-        assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
     @Test
     public void testChangePosition() throws Exception{
