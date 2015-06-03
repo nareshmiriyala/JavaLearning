@@ -1,4 +1,4 @@
-package com.nareshm.javalearning.observerpattern;
+package com.medibank.entities;
 
 /**
  * Created by NARESHM on 3/06/2015.
