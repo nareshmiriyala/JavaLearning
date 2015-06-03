@@ -1,5 +1,7 @@
 package com.medibank.app;
 
+import com.medibank.entities.Position;
+import com.medibank.entities.Trainee;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,8 +30,18 @@ public class FitBitTest {
        fitBit=new FitBit(mockInputStream);
     }
     @Test
-    public void testLogic()throws Exception{
+    public void testLogicScenario1()throws Exception{
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("1 2 N").thenReturn("LMLMLMLMM");
-        fitBit.startSession();
+        Trainee trainee = fitBit.startSession();
+        assertNotNull(trainee);
+        Position expectedPosition=new Position(1,3, FitBit.Directions.N);
+        assertEquals("Final Coordinates should be equal",expectedPosition,trainee.getCurrentPosition());
+    }
+    @Test
+    public void testLogicScenario2()throws Exception{
+        when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("3 3 E").thenReturn("MMRMMRMRRM");
+        Trainee trainee = fitBit.startSession();
+        Position expectedPosition=new Position(5,1, FitBit.Directions.E);
+        assertEquals("Final Coordinates should be equal",expectedPosition,trainee.getCurrentPosition());
     }
 }
