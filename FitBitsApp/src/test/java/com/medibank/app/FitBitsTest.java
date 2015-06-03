@@ -57,6 +57,13 @@ public class FitBitsTest {
         Position expectedPosition = new Position(5, 1, FitBits.Directions.E);
         assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
+    @Test
+    public void testLogicScenario3() throws Exception {
+        when(mockInputStream.readLine()).thenReturn("15 15").thenReturn("9 3 E").thenReturn("MMR");
+        Trainee trainee = spyFitBits.startSession();
+//        Position expectedPosition = new Position(5, 1, FitBits.Directions.E);
+//        assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
+    }
 
     @Test(expected = InvalidPositionException.class)
     public void testInputStartingPositionNotInRange() throws Exception {
@@ -75,17 +82,21 @@ public class FitBitsTest {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("4 4 E").thenReturn("mfdfd");//here value 6 3 E is not in range
         Trainee trainee = spyFitBits.startSession();
     }
+
     @Test(expected = InvalidCommandException.class)
     public void testInputCommandsNotInRange() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("3 3 E").thenReturn("MMMMMMMMMMMMMMM");
         Trainee trainee = spyFitBits.startSession();
-        Position expectedPosition = new Position(5, 1, FitBits.Directions.E);
-        assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
 
     @Test(expected = InvalidInputException.class)
     public void testInputSoccerPitchInvalid() throws Exception {
         when(mockInputStream.readLine()).thenReturn("533335").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
+        Trainee trainee = spyFitBits.startSession();
+    }
+    @Test(expected = InvalidInputException.class)
+    public void testInputSoccerPitchInvalidScenario1() throws Exception {
+        when(mockInputStream.readLine()).thenReturn("0 0").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
         Trainee trainee = spyFitBits.startSession();
     }
 

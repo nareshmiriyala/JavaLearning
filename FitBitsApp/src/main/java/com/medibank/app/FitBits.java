@@ -59,7 +59,7 @@ public class FitBits {
             List<COMMANDS> commands = trainee.getCommands();
 
             for (COMMANDS command : commands) {
-                System.out.println("command value:" + command);
+                System.out.println("command value " + command);
                 switch (command) {
                     case L:
                         changeDirection(trainee, leftDirectionsOrder);
@@ -148,11 +148,16 @@ public class FitBits {
         System.out.print("Enter Coordinates of Pitch:");
         String pitch = bufferedReader.readLine();
         String[] pitchData = getSplitData(pitch, "\\s");
-        if (pitchData.length != 2) {
+        if (pitchData.length != 2 ) {
             throw new InvalidInputException("Input soccer pitch size is invalid");
         } else {
             try {
-                soccerPitch = new SoccerPitch(Integer.parseInt(pitchData[0]), Integer.parseInt(pitchData[1]));
+                int xValue=Integer.parseInt(pitchData[0]);
+                int yValue=Integer.parseInt(pitchData[1]);
+                if((xValue==0 && yValue==0)||xValue<0 ||yValue<0){
+                    throw new InvalidInputException("Input soccer pitch value is invalid");
+                }
+                soccerPitch = new SoccerPitch(xValue,yValue);
             } catch (NumberFormatException e) {
                 throw new InvalidInputException("Input soccer pitch is invalid " + e.getMessage());
             }
