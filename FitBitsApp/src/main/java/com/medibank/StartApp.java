@@ -2,6 +2,7 @@ package com.medibank;
 
 import com.medibank.app.FitBits;
 import com.medibank.exceptions.InvalidCommandException;
+import com.medibank.exceptions.InvalidInputException;
 import com.medibank.exceptions.InvalidPositionException;
 
 import java.io.BufferedReader;
@@ -21,6 +22,8 @@ public class StartApp {
         } catch (InvalidPositionException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidInputException e) {
             e.printStackTrace();
         }
 

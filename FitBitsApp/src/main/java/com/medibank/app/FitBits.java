@@ -4,6 +4,7 @@ import com.medibank.entities.Position;
 import com.medibank.entities.SoccerPitch;
 import com.medibank.entities.Trainee;
 import com.medibank.exceptions.InvalidCommandException;
+import com.medibank.exceptions.InvalidInputException;
 import com.medibank.exceptions.InvalidPositionException;
 
 import java.io.BufferedReader;
@@ -30,7 +31,7 @@ public class FitBits {
     private static Logger logger = Logger.getLogger(FitBits.class.getName());
     private static SoccerPitch soccerPitch = null;
 
-    public Trainee startSession() throws InvalidCommandException, InvalidPositionException, IOException {
+    public Trainee startSession() throws InvalidCommandException, InvalidPositionException, IOException, InvalidInputException {
         Trainee trainee = null;
         rightDirectionsOrder = createDirectionsOrder();
         leftDirectionsOrder = new ArrayList<>(rightDirectionsOrder);
@@ -142,25 +143,38 @@ public class FitBits {
         return null;
     }
 
-    private Trainee readInput() throws IOException, InvalidPositionException {
+    private Trainee readInput() throws IOException, InvalidPositionException, InvalidInputException {
 
         System.out.print("Enter Coordinates of Pitch:");
         String pitch = bufferedReader.readLine();
         String[] pitchData = getSplitData(pitch, "\\s");
-        soccerPitch = new SoccerPitch(Integer.parseInt(pitchData[0]), Integer.parseInt(pitchData[1]));
+        if (pitchData.length != 2) {
+            throw new InvalidInputException("Input soccer pitch size is invalid");
+        } else {
+            try {
+                soccerPitch = new SoccerPitch(Integer.parseInt(pitchData[0]), Integer.parseInt(pitchData[1]));
+            } catch (NumberFormatException e) {
+                throw new InvalidInputException("Input soccer pitch is invalid " + e.getMessage());
+            }
+        }
         System.out.print("Enter Trainee Position:");
         String traineePosition = bufferedReader.readLine();
         String[] traineePositionData = getSplitData(traineePosition, "\\s");
         Trainee trainee = new Trainee();
-        if (Integer.parseInt(traineePositionData[0]) > soccerPitch.getX() || Integer.parseInt(traineePositionData[1]) > soccerPitch.getY()) {
-            throw new InvalidPositionException("Input position is invalid,value shouldn't exceed the soccer pitch size");
+        try {
+            if (Integer.parseInt(traineePositionData[0]) > soccerPitch.getX() || Integer.parseInt(traineePositionData[1]) > soccerPitch.getY()) {
+                throw new InvalidPositionException("Input position is invalid,value shouldn't exceed the soccer pitch size");
+            }
+            Position startPosition = new Position(Integer.parseInt(traineePositionData[0]), Integer.parseInt(traineePositionData[1]), Directions.valueOf(traineePositionData[2]));
+            trainee.setStartPosition(startPosition);
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException("Input trainee position is invalid " + e.getMessage());
         }
-        Position startPosition = new Position(Integer.parseInt(traineePositionData[0]), Integer.parseInt(traineePositionData[1]), Directions.valueOf(traineePositionData[2]));
-        trainee.setStartPosition(startPosition);
         System.out.print("Enter Trainee Instructions:");
         String instructions = bufferedReader.readLine();
         String[] instructionsData = getSplitData(instructions, "");
         List<COMMANDS> commandsList = new ArrayList<>();
+
         for (String command : instructionsData) {
             commandsList.add(COMMANDS.valueOf(command));
         }
