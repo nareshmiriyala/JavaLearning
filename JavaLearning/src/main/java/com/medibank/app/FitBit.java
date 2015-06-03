@@ -20,7 +20,9 @@ public class FitBit {
     private  List<Directions> rightDirectionsOrder =null;
     private  List<Directions> leftDirectionsOrder =null;
      BufferedReader bufferedReader =null;
-
+   public FitBit(BufferedReader bufferedReader){
+       this.bufferedReader =bufferedReader;
+   }
     private static Logger logger= Logger.getLogger(FitBit.class.getName());
     private static SoccerPitch soccerPitch=null;
     public FitBit(){}
@@ -139,7 +141,7 @@ public class FitBit {
     }
 
     private Trainee readInput() throws IOException {
-         bufferedReader =new BufferedReader(new InputStreamReader(System.in));
+
         System.out.print("Enter Coordinates of Pitch:");
         String pitch = bufferedReader.readLine();
         String[] pitchData = getSplitData(pitch,"\\s");

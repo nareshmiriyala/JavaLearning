@@ -10,6 +10,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 
 import static org.junit.Assert.*;
 import static org.powermock.api.mockito.PowerMockito.when;
@@ -17,23 +18,18 @@ import static org.powermock.api.mockito.PowerMockito.when;
 @RunWith(PowerMockRunner.class)
 public class FitBitTest {
 
-    private FitBit spyFitBit;
+    private FitBit fitBit;
 
     @Mock
-    BufferedReader mockBufferedReader;
-
-    @Mock
-    private System mockSystem;
+    BufferedReader mockInputStream;
 
     @Before
     public void setUp() throws Exception {
-
-        spyFitBit=PowerMockito.spy(new FitBit());
+       fitBit=new FitBit(mockInputStream);
     }
     @Test
     public void testLogic()throws Exception{
-        when(mockBufferedReader.readLine()).thenReturn("5 5").thenReturn("1 2 N").thenReturn("LMLMLMLMM");
-        MemberMatcher.field(FitBit.class, "bufferedReader").set(spyFitBit, mockBufferedReader);
-        spyFitBit.startSession();
+        when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("1 2 N").thenReturn("LMLMLMLMM");
+        fitBit.startSession();
     }
 }
