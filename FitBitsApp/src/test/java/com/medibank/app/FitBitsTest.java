@@ -59,10 +59,10 @@ public class FitBitsTest {
     }
     @Test
     public void testLogicScenario3() throws Exception {
-        when(mockInputStream.readLine()).thenReturn("15 15").thenReturn("9 3 E").thenReturn("MMR");
+        when(mockInputStream.readLine()).thenReturn("15 15").thenReturn("9 3 E").thenReturn("MMRRRRRRRRRRRRRRRRRRRRRRL");
         Trainee trainee = spyFitBits.startSession();
-//        Position expectedPosition = new Position(5, 1, FitBits.Directions.E);
-//        assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
+        Position expectedPosition = new Position(11, 3, FitBits.Directions.S);
+        assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
 
     @Test(expected = InvalidPositionException.class)
