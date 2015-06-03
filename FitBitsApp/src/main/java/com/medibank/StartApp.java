@@ -1,8 +1,11 @@
 package com.medibank;
 
 import com.medibank.app.FitBits;
+import com.medibank.exceptions.InvalidCommandException;
+import com.medibank.exceptions.InvalidPositionException;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -11,6 +14,15 @@ import java.io.InputStreamReader;
 public class StartApp {
     public static void main(String[] args) {
         FitBits fitBits = new FitBits(new BufferedReader(new InputStreamReader(System.in)));
-        fitBits.startSession();
+        try {
+            fitBits.startSession();
+        } catch (InvalidCommandException e) {
+            e.printStackTrace();
+        } catch (InvalidPositionException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

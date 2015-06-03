@@ -4,6 +4,7 @@ import com.medibank.entities.Position;
 import com.medibank.entities.SoccerPitch;
 import com.medibank.entities.Trainee;
 import com.medibank.exceptions.InvalidCommandException;
+import com.medibank.exceptions.InvalidPositionException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,22 +30,14 @@ public class FitBits {
     private static Logger logger = Logger.getLogger(FitBits.class.getName());
     private static SoccerPitch soccerPitch = null;
 
-    public Trainee startSession() {
+    public Trainee startSession() throws InvalidCommandException, InvalidPositionException, IOException {
         Trainee trainee = null;
         rightDirectionsOrder = createDirectionsOrder();
         leftDirectionsOrder = new ArrayList<>(rightDirectionsOrder);
         //reverse the order
         Collections.reverse(leftDirectionsOrder);
-        try {
             trainee = readInput();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             doCalibrate(trainee);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         System.out.println(trainee);
         return trainee;
 
@@ -60,7 +53,7 @@ public class FitBits {
     }
 
 
-    private void doCalibrate(Trainee trainee) throws Exception {
+    private void doCalibrate(Trainee trainee) throws InvalidCommandException {
         if (trainee != null) {
             List<COMMANDS> commands = trainee.getCommands();
 
@@ -99,12 +92,18 @@ public class FitBits {
                     }
                     break;
                 case W:
-                    if (x > 0)
+                    if ((x-1) < 0){
+                        throw new InvalidCommandException("Invalid command ,cant move end of soccer pitch");
+                    }else {
                         trainee.getCurrentPosition().setX(x - 1);
+                    }
                     break;
                 case S:
-                    if (y > 0)
+                    if ((y-1) < 0){
+                        throw new InvalidCommandException("Invalid command ,cant move end of soccer pitch");
+                    }else {
                         trainee.getCurrentPosition().setY(y - 1);
+                    }
                     break;
                 case E:
                     if (x + 1 > soccerPitch.getX()) {
@@ -143,7 +142,7 @@ public class FitBits {
         return null;
     }
 
-    private Trainee readInput() throws IOException {
+    private Trainee readInput() throws IOException, InvalidPositionException {
 
         System.out.print("Enter Coordinates of Pitch:");
         String pitch = bufferedReader.readLine();
@@ -153,6 +152,9 @@ public class FitBits {
         String traineePosition = bufferedReader.readLine();
         String[] traineePositionData = getSplitData(traineePosition, "\\s");
         Trainee trainee = new Trainee();
+        if(Integer.parseInt(traineePositionData[0])>soccerPitch.getX()||Integer.parseInt(traineePositionData[1])>soccerPitch.getY()){
+            throw new InvalidPositionException("Input position is invalid,value shouldn't exceed the soccer pitch size");
+        }
         Position startPosition = new Position(Integer.parseInt(traineePositionData[0]), Integer.parseInt(traineePositionData[1]), Directions.valueOf(traineePositionData[2]));
         trainee.setStartPosition(startPosition);
         System.out.print("Enter Trainee Instructions:");
