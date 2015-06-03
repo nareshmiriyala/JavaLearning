@@ -15,32 +15,32 @@ import static org.junit.Assert.assertNotNull;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
-public class FitBitTest {
+public class FitBitsTest {
 
-    private FitBit fitBit;
+    private FitBits fitBits;
 
     @Mock
     BufferedReader mockInputStream;
 
     @Before
     public void setUp() throws Exception {
-        fitBit = new FitBit(mockInputStream);
+        fitBits = new FitBits(mockInputStream);
     }
 
     @Test
     public void testLogicScenario1() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("1 2 N").thenReturn("LMLMLMLMM");
-        Trainee trainee = fitBit.startSession();
+        Trainee trainee = fitBits.startSession();
         assertNotNull(trainee);
-        Position expectedPosition = new Position(1, 3, FitBit.Directions.N);
+        Position expectedPosition = new Position(1, 3, FitBits.Directions.N);
         assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
 
     @Test
     public void testLogicScenario2() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("3 3 E").thenReturn("MMRMMRMRRM");
-        Trainee trainee = fitBit.startSession();
-        Position expectedPosition = new Position(5, 1, FitBit.Directions.E);
+        Trainee trainee = fitBits.startSession();
+        Position expectedPosition = new Position(5, 1, FitBits.Directions.E);
         assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
 }

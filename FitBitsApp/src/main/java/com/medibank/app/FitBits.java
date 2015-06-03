@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * Created by NARESHM on 3/06/2015.
  */
-public class FitBit {
+public class FitBits {
     public enum Directions {N, E, W, S}
 
     public enum COMMANDS {L, R, M}
@@ -22,11 +22,11 @@ public class FitBit {
     private List<Directions> leftDirectionsOrder = null;
     private BufferedReader bufferedReader = null;
 
-    public FitBit(BufferedReader bufferedReader) {
+    public FitBits(BufferedReader bufferedReader) {
         this.bufferedReader = bufferedReader;
     }
 
-    private static Logger logger = Logger.getLogger(FitBit.class.getName());
+    private static Logger logger = Logger.getLogger(FitBits.class.getName());
     private static SoccerPitch soccerPitch = null;
 
     public Trainee startSession() {

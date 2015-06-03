@@ -1,15 +1,15 @@
 package com.medibank.entities;
 
-import com.medibank.app.FitBit;
+import com.medibank.app.FitBits;
 
 /**
  * Created by NARESHM on 3/06/2015.
  */
 public class Position {
     int x, y;
-    FitBit.Directions direction;
+    FitBits.Directions direction;
 
-    public Position(int x, int y, FitBit.Directions direction) {
+    public Position(int x, int y, FitBits.Directions direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -31,11 +31,11 @@ public class Position {
         this.y = y;
     }
 
-    public FitBit.Directions getDirection() {
+    public FitBits.Directions getDirection() {
         return direction;
     }
 
-    public void setDirection(FitBit.Directions direction) {
+    public void setDirection(FitBits.Directions direction) {
         this.direction = direction;
     }
 

@@ -1,6 +1,6 @@
 package com.medibank.entities;
 
-import com.medibank.app.FitBit;
+import com.medibank.app.FitBits;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class Trainee {
     private Position startPosition;
     private Position endPosition;
     private Position currentPosition;
-    private List<FitBit.COMMANDS> commands;
+    private List<FitBits.COMMANDS> commands;
 
     public Position getCurrentPosition() {
         //set start position as current position if its null
@@ -41,11 +41,11 @@ public class Trainee {
         this.endPosition = endPosition;
     }
 
-    public List<FitBit.COMMANDS> getCommands() {
+    public List<FitBits.COMMANDS> getCommands() {
         return commands;
     }
 
-    public void setCommands(List<FitBit.COMMANDS> commands) {
+    public void setCommands(List<FitBits.COMMANDS> commands) {
         this.commands = commands;
     }
 
