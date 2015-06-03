@@ -25,20 +25,8 @@ public class Trainee {
         this.currentPosition = currentPosition;
     }
 
-    public Position getStartPosition() {
-        return startPosition;
-    }
-
     public void setStartPosition(Position startPosition) {
         this.startPosition = startPosition;
-    }
-
-    public Position getEndPosition() {
-        return endPosition;
-    }
-
-    public void setEndPosition(Position endPosition) {
-        this.endPosition = endPosition;
     }
 
     public List<FitBits.COMMANDS> getCommands() {

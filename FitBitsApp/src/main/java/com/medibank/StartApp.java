@@ -16,7 +16,13 @@ public class StartApp {
     public static void main(String[] args) {
         FitBits fitBits = new FitBits(new BufferedReader(new InputStreamReader(System.in)));
         try {
-            fitBits.startSession();
+
+            while(true) {
+                System.out.println("===========START=============");
+                System.out.println("Enter the Input Values");
+                fitBits.startSession();
+                System.out.println("===========END=============");
+            }
         } catch (InvalidCommandException e) {
             e.printStackTrace();
         } catch (InvalidPositionException e) {

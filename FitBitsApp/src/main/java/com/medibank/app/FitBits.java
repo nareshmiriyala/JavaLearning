@@ -13,7 +13,15 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
- * Created by NARESHM on 3/06/2015.
+ * <p>
+ * This class will read the input value and do the trainee fitbits calibration.
+ * Input :
+ *    1)Upper-right coordinates of the pitch. ex: 5 5
+ *    2) Trainee position by coach. ex: 3 3 N
+ *    3)Series of instructions from coach telling the trainee how to move on the pitch.
+ *       ex: MLMRLMR
+ *
+ * </p>
  */
 public class FitBits {
     public enum Directions {N, E, W, S}
@@ -144,22 +152,23 @@ public class FitBits {
     }
 
     private Trainee readInput() throws IOException, InvalidPositionException, InvalidInputException {
-
-        System.out.print("Enter Coordinates of Pitch:");
-        String pitch = bufferedReader.readLine();
-        String[] pitchData = getSplitData(pitch, "\\s");
-        if (pitchData.length != 2 ) {
-            throw new InvalidInputException("Input soccer pitch size is invalid");
-        } else {
-            try {
-                int xValue=Integer.parseInt(pitchData[0]);
-                int yValue=Integer.parseInt(pitchData[1]);
-                if((xValue==0 && yValue==0)||xValue<0 ||yValue<0){
-                    throw new InvalidInputException("Input soccer pitch value is invalid");
+        if(soccerPitch==null) {
+            System.out.print("Enter Coordinates of Pitch:");
+            String pitch = bufferedReader.readLine();
+            String[] pitchData = getSplitData(pitch, "\\s");
+            if (pitchData.length != 2) {
+                throw new InvalidInputException("Input soccer pitch size is invalid");
+            } else {
+                try {
+                    int xValue = Integer.parseInt(pitchData[0]);
+                    int yValue = Integer.parseInt(pitchData[1]);
+                    if ((xValue == 0 && yValue == 0) || xValue < 0 || yValue < 0) {
+                        throw new InvalidInputException("Input soccer pitch value is invalid");
+                    }
+                    soccerPitch = new SoccerPitch(xValue, yValue);
+                } catch (NumberFormatException e) {
+                    throw new InvalidInputException("Input soccer pitch is invalid " + e.getMessage());
                 }
-                soccerPitch = new SoccerPitch(xValue,yValue);
-            } catch (NumberFormatException e) {
-                throw new InvalidInputException("Input soccer pitch is invalid " + e.getMessage());
             }
         }
         System.out.print("Enter Trainee Position:");

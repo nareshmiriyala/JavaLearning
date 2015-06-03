@@ -29,10 +29,6 @@ public class FitBitsTest {
     @Mock
     private BufferedReader mockInputStream;
 
-    private Position mockCurrentPosition;
-
-    private Trainee mockTrainee;
-
     @Mock
     private SoccerPitch mockSoccerPitch;
 
@@ -133,8 +129,8 @@ public class FitBitsTest {
                 mockSoccerPitch, mockSoccerPitch);
         when(mockSoccerPitch.getY()).thenReturn(5);
         when(mockSoccerPitch.getX()).thenReturn(5);
-        mockTrainee = new Trainee();
-        mockCurrentPosition = new Position(2, 2, FitBits.Directions.E);
+        Trainee mockTrainee = new Trainee();
+        Position mockCurrentPosition = new Position(2, 2, FitBits.Directions.E);
         mockTrainee.setCurrentPosition(mockCurrentPosition);
         Whitebox.invokeMethod(spyFitBits, "changePosition", mockTrainee);
         assertNotNull(mockTrainee);

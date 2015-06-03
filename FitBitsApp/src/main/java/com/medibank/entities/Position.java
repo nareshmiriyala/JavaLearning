@@ -6,8 +6,9 @@ import com.medibank.app.FitBits;
  * Created by NARESHM on 3/06/2015.
  */
 public class Position {
-    int x, y;
-    FitBits.Directions direction;
+    private int x;
+    private int y;
+    private FitBits.Directions direction;
 
     public Position(int x, int y, FitBits.Directions direction) {
         this.x = x;
@@ -57,9 +58,8 @@ public class Position {
 
         if (x != position.x) return false;
         if (y != position.y) return false;
-        if (direction != position.direction) return false;
+        return direction == position.direction;
 
-        return true;
     }
 
     @Override
