@@ -19,6 +19,7 @@ public class FitBit {
     public enum COMMANDS{L,R,M}
     private  List<Directions> rightDirectionsOrder =null;
     private  List<Directions> leftDirectionsOrder =null;
+     BufferedReader bufferedReader =null;
 
     private static Logger logger= Logger.getLogger(FitBit.class.getName());
     private static SoccerPitch soccerPitch=null;
@@ -137,20 +138,20 @@ public class FitBit {
         return null;
     }
 
-    private static Trainee readInput() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private Trainee readInput() throws IOException {
+         bufferedReader =new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Enter Coordinates of Pitch:");
-        String pitch = br.readLine();
+        String pitch = bufferedReader.readLine();
         String[] pitchData = getSplitData(pitch,"\\s");
         soccerPitch =new SoccerPitch(Integer.parseInt(pitchData[0]),Integer.parseInt(pitchData[1]));
         System.out.print("Enter Trainee Position:");
-        String traineePosition = br.readLine();
+        String traineePosition = bufferedReader.readLine();
         String[] traineePositionData=getSplitData(traineePosition,"\\s");
         Trainee trainee = new Trainee();
         Position startPosition=new Position(Integer.parseInt(traineePositionData[0]),Integer.parseInt(traineePositionData[1]),Directions.valueOf(traineePositionData[2]));
         trainee.setStartPosition(startPosition);
         System.out.print("Enter Trainee Instructions:");
-        String instructions=br.readLine();
+        String instructions= bufferedReader.readLine();
         String[] instructionsData = getSplitData(instructions, "");
         List<COMMANDS>  commandsList=new ArrayList<>();
         for(String command:instructionsData) {
