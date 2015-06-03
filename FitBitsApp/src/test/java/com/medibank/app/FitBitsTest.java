@@ -42,7 +42,7 @@ public class FitBitsTest {
     }
 
     @Test
-    public void testLogicScenario1() throws Exception {
+    public void testSuccessScenario1() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("1 2 N").thenReturn("LMLMLMLMM");
         Trainee trainee = spyFitBits.startSession();
         assertNotNull(trainee);
@@ -51,17 +51,34 @@ public class FitBitsTest {
     }
 
     @Test
-    public void testLogicScenario2() throws Exception {
+    public void testSuccessScenario2() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("3 3 E").thenReturn("MMRMMRMRRM");
         Trainee trainee = spyFitBits.startSession();
         Position expectedPosition = new Position(5, 1, FitBits.Directions.E);
         assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
+
     @Test
-    public void testLogicScenario3() throws Exception {
+    public void testSuccessScenario3() throws Exception {
         when(mockInputStream.readLine()).thenReturn("15 15").thenReturn("9 3 E").thenReturn("MMRRRRRRRRRRRRRRRRRRRRRRL");
         Trainee trainee = spyFitBits.startSession();
         Position expectedPosition = new Position(11, 3, FitBits.Directions.S);
+        assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
+    }
+
+    @Test
+    public void testSuccessScenario4() throws Exception {
+        when(mockInputStream.readLine()).thenReturn("1 1").thenReturn("1 1 S").thenReturn("M");
+        Trainee trainee = spyFitBits.startSession();
+        Position expectedPosition = new Position(1, 0, FitBits.Directions.S);
+        assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
+    }
+
+    @Test
+    public void testSuccessScenario5() throws Exception {
+        when(mockInputStream.readLine()).thenReturn("1 1").thenReturn("1 0 W").thenReturn("M");
+        Trainee trainee = spyFitBits.startSession();
+        Position expectedPosition = new Position(0, 0, FitBits.Directions.W);
         assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
 
@@ -94,6 +111,7 @@ public class FitBitsTest {
         when(mockInputStream.readLine()).thenReturn("533335").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
         Trainee trainee = spyFitBits.startSession();
     }
+
     @Test(expected = InvalidInputException.class)
     public void testInputSoccerPitchInvalidScenario1() throws Exception {
         when(mockInputStream.readLine()).thenReturn("0 0").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
