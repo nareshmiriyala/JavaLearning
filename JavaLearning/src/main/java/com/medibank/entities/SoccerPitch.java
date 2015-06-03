@@ -5,10 +5,11 @@ package com.medibank.entities;
  */
 public class SoccerPitch {
 
-    int x,y;
-    public SoccerPitch(int x,int y){
-        this.x=x;
-        this.y=y;
+    int x, y;
+
+    public SoccerPitch(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {

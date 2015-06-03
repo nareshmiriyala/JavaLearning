@@ -29,9 +29,6 @@ public class FitBit {
     private static Logger logger = Logger.getLogger(FitBit.class.getName());
     private static SoccerPitch soccerPitch = null;
 
-    public FitBit() {
-    }
-
     public Trainee startSession() {
         Trainee trainee = null;
         rightDirectionsOrder = createDirectionsOrder();

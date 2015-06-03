@@ -6,12 +6,13 @@ import com.medibank.app.FitBit;
  * Created by NARESHM on 3/06/2015.
  */
 public class Position {
-    int x,y;
+    int x, y;
     FitBit.Directions direction;
-    public Position(int x,int y,FitBit.Directions direction){
-        this.x=x;
-        this.y=y;
-        this.direction=direction;
+
+    public Position(int x, int y, FitBit.Directions direction) {
+        this.x = x;
+        this.y = y;
+        this.direction = direction;
     }
 
     public int getX() {

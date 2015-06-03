@@ -12,10 +12,11 @@ public class Trainee {
     private Position endPosition;
     private Position currentPosition;
     private List<FitBit.COMMANDS> commands;
+
     public Position getCurrentPosition() {
         //set start position as current position if its null
-        if(currentPosition==null){
-            currentPosition=startPosition;
+        if (currentPosition == null) {
+            currentPosition = startPosition;
         }
         return currentPosition;
     }

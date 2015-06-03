@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
  */
 public class StartApp {
     public static void main(String[] args) {
-        FitBit fitBit=new FitBit(new BufferedReader(new InputStreamReader(System.in)));
+        FitBit fitBit = new FitBit(new BufferedReader(new InputStreamReader(System.in)));
         fitBit.startSession();
     }
 }
