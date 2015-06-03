@@ -26,7 +26,8 @@ public class FitBit {
             String traineePosition = br.readLine();
             String[] traineePositionData=getSplitData(traineePosition);
             Trainee trainee=new Trainee();
-            trainee.setStartPosition();
+            Position startPosition=new Position(Integer.parseInt(traineePositionData[0]),Integer.parseInt(traineePositionData[1]),traineePositionData[1]);
+            trainee.setStartPosition(startPosition);
             System.out.print("Enter Trainee Instructions::");
             String instructions=br.readLine();
         }
