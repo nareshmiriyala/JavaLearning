@@ -1,5 +1,6 @@
 package com.medibank.app;
 
+import com.medibank.StartApp;
 import com.medibank.entities.Position;
 import com.medibank.entities.SoccerPitch;
 import com.medibank.entities.Trainee;
@@ -40,6 +41,7 @@ public class FitBitsTest {
         MemberModifier
                 .field(FitBits.class, "soccerPitch").set(
                 null, null);
+        spyFitBits.setInputType(StartApp.InputType.FILE);
     }
 
     @After
@@ -88,6 +90,7 @@ public class FitBitsTest {
         Position expectedPosition = new Position(0, 0, FitBits.Directions.W);
         assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
+
     @Test
     public void testSuccessScenarioTwoAgents() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("1 0 W").thenReturn("M");

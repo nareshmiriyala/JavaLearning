@@ -1,5 +1,6 @@
 package com.medibank.app;
 
+import com.medibank.StartApp;
 import com.medibank.entities.Position;
 import com.medibank.entities.SoccerPitch;
 import com.medibank.entities.Trainee;
@@ -10,6 +11,7 @@ import com.medibank.exceptions.InvalidPositionException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -32,6 +34,16 @@ public class FitBits {
     private List<Directions> leftDirectionsOrder = null;
     private BufferedReader bufferedReader = null;
 
+    private StartApp.InputType inputType;
+
+    public StartApp.InputType getInputType() {
+        return inputType;
+    }
+
+    public void setInputType(StartApp.InputType inputType) {
+        this.inputType = inputType;
+    }
+
     public FitBits(BufferedReader bufferedReader) {
         this.bufferedReader = bufferedReader;
     }
@@ -47,7 +59,7 @@ public class FitBits {
         Collections.reverse(leftDirectionsOrder);
         Trainee trainee = readInput();
         doCalibrate(trainee);
-        System.out.println(trainee);
+        System.out.println("Final trainee "+trainee.getCurrentPosition());
         return trainee;
 
     }
@@ -67,7 +79,7 @@ public class FitBits {
             List<COMMANDS> commands = trainee.getCommands();
 
             for (COMMANDS command : commands) {
-                System.out.println("command value " + command);
+                logger.log(Level.INFO,"Command {0}",command);
                 switch (command) {
                     case L:
                         changeDirection(trainee, leftDirectionsOrder);
@@ -81,7 +93,7 @@ public class FitBits {
                     default:
                         throw new InvalidCommandException("Invalid command");
                 }
-                System.out.println("Changed position values:" + trainee);
+                logger.log(Level.INFO,"Changed position values {0}" , trainee);
             }
 
         }
@@ -129,7 +141,7 @@ public class FitBits {
     private static void changeDirection(Trainee trainee, List<Directions> order) {
         Directions currentDirection = trainee.getCurrentPosition().getDirection();
         Directions newDirection = getNewDirection(currentDirection, order);
-        System.out.println("Changed Direction:" + newDirection);
+        logger.log(Level.INFO,"Changed Direction: {0}", newDirection);
         if (newDirection != null) {
             trainee.getCurrentPosition().setDirection(newDirection);
         }
@@ -153,8 +165,10 @@ public class FitBits {
 
     private Trainee readInput() throws IOException, InvalidPositionException, InvalidInputException {
         if (soccerPitch == null) {
-            System.out.print("Enter Coordinates of Pitch:");
-            String pitch = bufferedReader.readLine();
+            if(isConsoleInput()) {
+                System.out.println("Enter Coordinates of Pitch:");
+            }
+            String pitch = validateInput();
             String[] pitchData = getSplitData(pitch, "\\s");
             if (pitchData.length != 2) {
                 throw new InvalidInputException("Input soccer pitch size is invalid");
@@ -171,8 +185,10 @@ public class FitBits {
                 }
             }
         }
-        System.out.print("Enter Trainee Position:");
-        String traineePosition = bufferedReader.readLine();
+        if(isConsoleInput()) {
+            System.out.println("Enter Trainee Position:");
+        }
+        String traineePosition = validateInput();
         String[] traineePositionData = getSplitData(traineePosition, "\\s");
         Trainee trainee = new Trainee();
         try {
@@ -184,8 +200,10 @@ public class FitBits {
         } catch (NumberFormatException e) {
             throw new InvalidInputException("Input trainee position is invalid " + e.getMessage());
         }
-        System.out.print("Enter Trainee Instructions:");
-        String instructions = bufferedReader.readLine();
+        if(isConsoleInput()) {
+            System.out.println("Enter Trainee Instructions:");
+        }
+        String instructions = validateInput();
         String[] instructionsData = getSplitData(instructions, "");
         List<COMMANDS> commandsList = new ArrayList<>();
 
@@ -196,10 +214,26 @@ public class FitBits {
         return trainee;
     }
 
+    private boolean isConsoleInput() {
+        return inputType.equals(StartApp.InputType.CONSOLE);
+    }
+
+    private String validateInput() throws IOException, InvalidInputException {
+        String line = bufferedReader.readLine();
+        if(line==null ||line.isEmpty()){
+            if(isConsoleInput())
+            throw new InvalidInputException("Console Input is invalid.");
+            else if(inputType.equals(StartApp.InputType.FILE))
+            {
+                System.out.println("End of File.");
+                System.exit(0);
+            }
+        }
+        return line;
+    }
+
     private static String[] getSplitData(String pitch, String pattern) {
         String[] data = pitch.split(pattern);
-//        logger.log(Level.INFO, "Data split: {0}", Arrays.toString(data));
-        System.out.println("Data split:" + Arrays.toString(data));
         return data;
     }
 
