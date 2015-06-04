@@ -23,11 +23,7 @@ public class StartApp {
                 fitBits.startSession();
                 System.out.println("===========END=============");
             }
-        } catch (InvalidCommandException e) {
-            e.printStackTrace();
-        } catch (InvalidPositionException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (InvalidCommandException | InvalidPositionException | IOException e) {
             e.printStackTrace();
         } catch (InvalidInputException e) {
             e.printStackTrace();

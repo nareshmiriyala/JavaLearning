@@ -5,8 +5,8 @@ package com.medibank.entities;
  */
 public class SoccerPitch {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public SoccerPitch(int x, int y) {
         this.x = x;

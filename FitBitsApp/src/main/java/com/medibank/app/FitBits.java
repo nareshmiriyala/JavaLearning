@@ -16,11 +16,11 @@ import java.util.logging.Logger;
  * <p>
  * This class will read the input value and do the trainee fitbits calibration.
  * Input :
- *    1)Upper-right coordinates of the pitch. ex: 5 5
- *    2) Trainee position by coach. ex: 3 3 N
- *    3)Series of instructions from coach telling the trainee how to move on the pitch.
- *       ex: MLMRLMR
- *
+ * 1)Upper-right coordinates of the pitch. ex: 5 5
+ * 2) Trainee position by coach. ex: 3 3 N
+ * 3)Series of instructions from coach telling the trainee how to move on the pitch.
+ * ex: MLMRLMR
+ * <p>
  * </p>
  */
 public class FitBits {
@@ -40,12 +40,12 @@ public class FitBits {
     private static SoccerPitch soccerPitch = null;
 
     public Trainee startSession() throws InvalidCommandException, InvalidPositionException, IOException, InvalidInputException {
-        Trainee trainee = null;
+
         rightDirectionsOrder = createDirectionsOrder();
         leftDirectionsOrder = new ArrayList<>(rightDirectionsOrder);
         //reverse the order
         Collections.reverse(leftDirectionsOrder);
-        trainee = readInput();
+        Trainee trainee = readInput();
         doCalibrate(trainee);
         System.out.println(trainee);
         return trainee;
@@ -152,7 +152,7 @@ public class FitBits {
     }
 
     private Trainee readInput() throws IOException, InvalidPositionException, InvalidInputException {
-        if(soccerPitch==null) {
+        if (soccerPitch == null) {
             System.out.print("Enter Coordinates of Pitch:");
             String pitch = bufferedReader.readLine();
             String[] pitchData = getSplitData(pitch, "\\s");

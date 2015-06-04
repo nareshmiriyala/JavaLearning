@@ -6,6 +6,7 @@ import com.medibank.entities.Trainee;
 import com.medibank.exceptions.InvalidCommandException;
 import com.medibank.exceptions.InvalidInputException;
 import com.medibank.exceptions.InvalidPositionException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,16 @@ public class FitBitsTest {
     @Before
     public void setUp() throws Exception {
         spyFitBits = PowerMockito.spy(new FitBits(mockInputStream));
+        // mock private soccerPitch and initialize it null
+        MemberModifier
+                .field(FitBits.class, "soccerPitch").set(
+                null, null);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        spyFitBits = null;
+
     }
 
     @Test
@@ -77,47 +88,58 @@ public class FitBitsTest {
         Position expectedPosition = new Position(0, 0, FitBits.Directions.W);
         assertEquals("Final Coordinates should be equal", expectedPosition, trainee.getCurrentPosition());
     }
+    @Test
+    public void testSuccessScenarioTwoAgents() throws Exception {
+        when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("1 0 W").thenReturn("M");
+        Trainee trainee1 = spyFitBits.startSession();
+        Position expectedPosition = new Position(0, 0, FitBits.Directions.W);
+        assertEquals("Final Coordinates should be equal", expectedPosition, trainee1.getCurrentPosition());
+        when(mockInputStream.readLine()).thenReturn("3 3 E").thenReturn("MMRMMRMRRM");//not need to return soccer size
+        Trainee trainee2 = spyFitBits.startSession();
+        Position expectedPosition2 = new Position(5, 1, FitBits.Directions.E);
+        assertEquals("Final Coordinates should be equal", expectedPosition2, trainee2.getCurrentPosition());
+    }
 
     @Test(expected = InvalidPositionException.class)
     public void testInputStartingPositionNotInRange() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
-        Trainee trainee = spyFitBits.startSession();
+        spyFitBits.startSession();
     }
 
     @Test(expected = InvalidInputException.class)
     public void testInputStartingPositionInvalid() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("E E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
-        Trainee trainee = spyFitBits.startSession();
+        spyFitBits.startSession();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInputCommandsInvalid() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("4 4 E").thenReturn("mfdfd");//here value 6 3 E is not in range
-        Trainee trainee = spyFitBits.startSession();
+        spyFitBits.startSession();
     }
 
     @Test(expected = InvalidCommandException.class)
     public void testInputCommandsNotInRange() throws Exception {
         when(mockInputStream.readLine()).thenReturn("5 5").thenReturn("3 3 E").thenReturn("MMMMMMMMMMMMMMM");
-        Trainee trainee = spyFitBits.startSession();
+        spyFitBits.startSession();
     }
 
     @Test(expected = InvalidInputException.class)
     public void testInputSoccerPitchInvalid() throws Exception {
         when(mockInputStream.readLine()).thenReturn("533335").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
-        Trainee trainee = spyFitBits.startSession();
+        spyFitBits.startSession();
     }
 
     @Test(expected = InvalidInputException.class)
     public void testInputSoccerPitchInvalidScenario1() throws Exception {
         when(mockInputStream.readLine()).thenReturn("0 0").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
-        Trainee trainee = spyFitBits.startSession();
+        spyFitBits.startSession();
     }
 
     @Test(expected = InvalidInputException.class)
     public void testInputSoccerPitchInvalidData() throws Exception {
         when(mockInputStream.readLine()).thenReturn("53 Y3335").thenReturn("6 3 E").thenReturn("MMRMMRMRRM");//here value 6 3 E is not in range
-        Trainee trainee = spyFitBits.startSession();
+        spyFitBits.startSession();
     }
 
 
