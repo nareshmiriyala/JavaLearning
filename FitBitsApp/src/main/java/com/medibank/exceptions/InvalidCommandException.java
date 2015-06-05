@@ -1,7 +1,8 @@
 package com.medibank.exceptions;
 
 /**
- * Created by NARESHM on 3/06/2015.
+ * Throws this exception when the coach enters wrong command.
+ * @author nareshm
  */
 public class InvalidCommandException extends Exception {
     private static final long serialVersionUID = 1L;

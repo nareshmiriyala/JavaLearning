@@ -24,12 +24,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
- * Unit tests for FitBits class
+ * Unit tests for FitBits Implementation class.
+ * @author nareshm
  */
 @RunWith(PowerMockRunner.class)
-public class FitBitsTest {
+public class FitBitsImplTest {
 
-    private FitBits spyFitBits;
+    private FitBitsImpl spyFitBits;
 
     @Mock
     private BufferedReader mockInputStream;
@@ -41,10 +42,10 @@ public class FitBitsTest {
 
     @Before
     public void setUp() throws Exception {
-        spyFitBits = PowerMockito.spy(new FitBits(mockInputStream));
+        spyFitBits = PowerMockito.spy(new FitBitsImpl(mockInputStream));
         // mock private soccerPitch and initialize it null
         MemberModifier
-                .field(FitBits.class, "soccerPitch").set(
+                .field(FitBitsImpl.class, "soccerPitch").set(
                 null, null);
         spyFitBits.setInputType(StartApp.InputType.FILE);
         trainee = new Trainee(spyFitBits);
@@ -158,7 +159,7 @@ public class FitBitsTest {
     public void testChangePosition() throws Exception {
         // mock private field/variable
         MemberModifier
-                .field(FitBits.class, "soccerPitch").set(
+                .field(FitBitsImpl.class, "soccerPitch").set(
                 mockSoccerPitch, mockSoccerPitch);
         when(mockSoccerPitch.getY()).thenReturn(5);
         when(mockSoccerPitch.getX()).thenReturn(5);

@@ -1,7 +1,8 @@
 package com.medibank.entities;
 
 /**
- * Created by NARESHM on 3/06/2015.
+ * Represents the soccer pitch where trainees play soccer.
+ * @author nareshm
  */
 public class SoccerPitch {
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Trainee class represents Medibank member who uses fitbits.
- *
+ * @author nareshm
  * */
 public class Trainee {
     private Position startPosition;

@@ -3,7 +3,8 @@ package com.medibank.entities;
 import com.medibank.app.Directions;
 
 /**
- * Created by NARESHM on 3/06/2015.
+ * Represents the position of trainee on the soccer pitch.
+ * @author nareshm
  */
 public class Position {
     private int x;

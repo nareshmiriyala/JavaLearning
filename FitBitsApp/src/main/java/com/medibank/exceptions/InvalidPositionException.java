@@ -1,7 +1,8 @@
 package com.medibank.exceptions;
 
 /**
- * Created by nareshm on 3/06/2015.
+ * Throw this exception when the position on the soccer pitch to move/entered is invalid.
+ * @author nareshm
  */
 public class InvalidPositionException extends Exception {
     private static final long serialVersionUID = 1L;
