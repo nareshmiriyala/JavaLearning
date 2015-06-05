@@ -1,0 +1,104 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FitBits</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.medibank.app</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FitBits (com.medibank.app)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">FitBits</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.medibank.app;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.medibank.StartApp;
+<i>4</i>&nbsp;import com.medibank.entities.Trainee;
+<i>5</i>&nbsp;import com.medibank.exceptions.InvalidCommandException;
+<i>6</i>&nbsp;import com.medibank.exceptions.InvalidInputException;
+<i>7</i>&nbsp;import com.medibank.exceptions.InvalidPositionException;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.io.IOException;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; * Interface of fitbits device.
+<i>13</i>&nbsp; * @author nareshm
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public interface FitBits {
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Set input type,accepts enum input value (console/file)
+<i>18</i>&nbsp;     * @param inputType
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    void setInputType(StartApp.InputType inputType);
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Start the fitbit app of the trainee.
+<i>24</i>&nbsp;     * @param trainee
+<i>25</i>&nbsp;     * @throws InvalidCommandException
+<i>26</i>&nbsp;     * @throws InvalidPositionException
+<i>27</i>&nbsp;     * @throws IOException
+<i>28</i>&nbsp;     * @throws InvalidInputException
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    void start(Trainee trainee) throws InvalidCommandException, InvalidPositionException, IOException, InvalidInputException;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * Do the fitbit calibration on the basis of coach input.
+<i>34</i>&nbsp;     * @param trainee
+<i>35</i>&nbsp;     * @throws InvalidCommandException
+<i>36</i>&nbsp;     * @throws InvalidPositionException
+<i>37</i>&nbsp;     */
+<i>38</i>&nbsp;    void doCalibrate(Trainee trainee) throws InvalidCommandException, InvalidPositionException;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    /**
+<i>41</i>&nbsp;     * Change the fitbits trainee position
+<i>42</i>&nbsp;     * @param trainee
+<i>43</i>&nbsp;     * @throws InvalidPositionException
+<i>44</i>&nbsp;     * @throws InvalidCommandException
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    void changePosition(Trainee trainee) throws InvalidPositionException, InvalidCommandException;
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Read the trainee data from coach
+<i>50</i>&nbsp;     * @param trainee
+<i>51</i>&nbsp;     * @return
+<i>52</i>&nbsp;     * @throws IOException
+<i>53</i>&nbsp;     * @throws InvalidPositionException
+<i>54</i>&nbsp;     * @throws InvalidInputException
+<i>55</i>&nbsp;     */
+<i>56</i>&nbsp;    Trainee readTraineeData(Trainee trainee) throws IOException, InvalidPositionException, InvalidInputException;
+<i>57</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2015-06-05 22:35</div>
+</div>
+</body>
+</html>
