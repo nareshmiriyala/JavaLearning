@@ -1,6 +1,7 @@
 package com.medibank;
 
 import com.medibank.app.FitBits;
+import com.medibank.entities.Trainee;
 import com.medibank.exceptions.InvalidCommandException;
 import com.medibank.exceptions.InvalidInputException;
 import com.medibank.exceptions.InvalidPositionException;
@@ -24,9 +25,8 @@ public class StartApp {
             inputStream = StartApp.class.getClassLoader().getResourceAsStream("input.properties");
             fitBits = getInputChannel(inputStream);
             while (true) {
-                synchronized (fitBits) {
-                    fitBits.startSession();
-                }
+                Trainee trainee = new Trainee(fitBits);
+                trainee.startSession();
             }
         } catch (InvalidCommandException | InvalidPositionException | IOException e) {
             e.printStackTrace();

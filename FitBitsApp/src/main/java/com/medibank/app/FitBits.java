@@ -26,19 +26,15 @@ import java.util.logging.Logger;
  * </p>
  */
 public class FitBits {
-    public enum Directions {N, E, W, S}
 
-    public enum COMMANDS {L, R, M}
+    public static final Level LEVEL = Level.FINE;
 
-    private List<Directions> rightDirectionsOrder = null;
-    private List<Directions> leftDirectionsOrder = null;
+
+    private static List<Directions> rightDirectionsOrder = null;
+    private static List<Directions> leftDirectionsOrder = null;
     private BufferedReader bufferedReader = null;
 
     private StartApp.InputType inputType;
-
-    public StartApp.InputType getInputType() {
-        return inputType;
-    }
 
     public void setInputType(StartApp.InputType inputType) {
         this.inputType = inputType;
@@ -51,17 +47,19 @@ public class FitBits {
     private static Logger logger = Logger.getLogger(FitBits.class.getName());
     private static SoccerPitch soccerPitch = null;
 
-    public Trainee startSession() throws InvalidCommandException, InvalidPositionException, IOException, InvalidInputException {
+    public void start(Trainee trainee) throws InvalidCommandException, InvalidPositionException, IOException, InvalidInputException {
+        configureDirections();
+        trainee = readTraineeData(trainee);
+        doCalibrate(trainee);
+        System.out.println("Final trainee "+trainee.getCurrentPosition());
 
+    }
+
+    private void configureDirections() {
         rightDirectionsOrder = createDirectionsOrder();
         leftDirectionsOrder = new ArrayList<>(rightDirectionsOrder);
         //reverse the order
         Collections.reverse(leftDirectionsOrder);
-        Trainee trainee = readInput();
-        doCalibrate(trainee);
-        System.out.println("Final trainee "+trainee.getCurrentPosition());
-        return trainee;
-
     }
 
     private static List<Directions> createDirectionsOrder() {
@@ -76,9 +74,9 @@ public class FitBits {
 
     private void doCalibrate(Trainee trainee) throws InvalidCommandException, InvalidPositionException {
         if (trainee != null) {
-            List<COMMANDS> commands = trainee.getCommands();
+            List<Commands> Commands = trainee.getCommands();
 
-            for (COMMANDS command : commands) {
+            for (Commands command : Commands) {
                 logger.log(Level.INFO,"Command {0}",command);
                 switch (command) {
                     case L:
@@ -93,7 +91,7 @@ public class FitBits {
                     default:
                         throw new InvalidCommandException("Invalid command");
                 }
-                logger.log(Level.INFO,"Changed position values {0}" , trainee);
+                logger.log(LEVEL,"Changed position values {0}" , trainee);
             }
 
         }
@@ -163,7 +161,7 @@ public class FitBits {
         return null;
     }
 
-    private Trainee readInput() throws IOException, InvalidPositionException, InvalidInputException {
+    private Trainee readTraineeData(Trainee trainee) throws IOException, InvalidPositionException, InvalidInputException {
         if (soccerPitch == null) {
             if(isConsoleInput()) {
                 System.out.println("Enter Coordinates of Pitch:");
@@ -190,7 +188,6 @@ public class FitBits {
         }
         String traineePosition = validateInput();
         String[] traineePositionData = getSplitData(traineePosition, "\\s");
-        Trainee trainee = new Trainee();
         try {
             if (Integer.parseInt(traineePositionData[0]) > soccerPitch.getX() || Integer.parseInt(traineePositionData[1]) > soccerPitch.getY()) {
                 throw new InvalidPositionException("Input position is invalid,value shouldn't exceed the soccer pitch size");
@@ -205,12 +202,12 @@ public class FitBits {
         }
         String instructions = validateInput();
         String[] instructionsData = getSplitData(instructions, "");
-        List<COMMANDS> commandsList = new ArrayList<>();
+        List<Commands> CommandsList = new ArrayList<>();
 
         for (String command : instructionsData) {
-            commandsList.add(COMMANDS.valueOf(command));
+            CommandsList.add(Commands.valueOf(command));
         }
-        trainee.setCommands(commandsList);
+        trainee.setCommands(CommandsList);
         return trainee;
     }
 
@@ -233,8 +230,7 @@ public class FitBits {
     }
 
     private static String[] getSplitData(String pitch, String pattern) {
-        String[] data = pitch.split(pattern);
-        return data;
+        return pitch.split(pattern);
     }
 
 }

@@ -1,17 +1,28 @@
 package com.medibank.entities;
 
+import com.medibank.app.Commands;
 import com.medibank.app.FitBits;
+import com.medibank.exceptions.InvalidCommandException;
+import com.medibank.exceptions.InvalidInputException;
+import com.medibank.exceptions.InvalidPositionException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by NARESHM on 3/06/2015.
- */
+ * Trainee class represents Medibank member who uses fitbits.
+ *
+ * */
 public class Trainee {
     private Position startPosition;
     private Position endPosition;
     private Position currentPosition;
-    private List<FitBits.COMMANDS> commands;
+    private List<Commands> Commands;
+    private FitBits fitBits;
+
+    public Trainee(FitBits fitBits){
+        this.fitBits=fitBits;
+    }
 
     public Position getCurrentPosition() {
         //set start position as current position if its null
@@ -29,12 +40,16 @@ public class Trainee {
         this.startPosition = startPosition;
     }
 
-    public List<FitBits.COMMANDS> getCommands() {
-        return commands;
+    public List<Commands> getCommands() {
+        return Commands;
     }
 
-    public void setCommands(List<FitBits.COMMANDS> commands) {
-        this.commands = commands;
+    public void setCommands(List<Commands> Commands) {
+        this.Commands = Commands;
+    }
+
+    public void startSession() throws InvalidCommandException, InvalidPositionException, InvalidInputException, IOException {
+        fitBits.start(this);
     }
 
     @Override
